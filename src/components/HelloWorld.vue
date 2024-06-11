@@ -49,8 +49,8 @@ export default {
      type: 'dashboard',
      tokenType: pbi.models.TokenType.Embed,
      //accessToken: accessToken,
-     embedUrl: 'https://app.powerbi.com/reportEmbed',
-     id: '5dac7a4a-4452-46b3-99f6-a25915e0fe55',
+     embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=bf7ade6f-e35b-4630-99e6-a1c6ee4d6caa&autoAuth=true&ctid=760fe82f-1c6d-4e38-9fa9-994e8f3fcb10',
+     id: '5760fe82f-1c6d-4e38-9fa9-994e8f3fcb10',
      pageView: 'fitToWidth',
      permissions: permissions,
   };
