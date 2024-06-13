@@ -1,69 +1,42 @@
-
-
-<template>
-  <h1>Test Powe BI</h1>
-  <div>
-   <section id="container" style="height: 750px"/>
-  </div>
-  <!-- <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div> -->
-</template>
-
 <script>
 import * as pbi from "powerbi-client";
 export default {
   name: 'HelloWorld',
-  // props: {
-  //   msg: String
-  // }
-  mounted () {
-   const permissions = pbi.models.Permissions.All
-   const config = {
-     type: 'dashboard',
-     tokenType: pbi.models.TokenType.Embed,
-     //accessToken: accessToken,
-     embedUrl: 'https://app.powerbi.com/reportEmbed?reportId=bf7ade6f-e35b-4630-99e6-a1c6ee4d6caa&autoAuth=true&ctid=760fe82f-1c6d-4e38-9fa9-994e8f3fcb10',
-     id: '5760fe82f-1c6d-4e38-9fa9-994e8f3fcb10',
-     pageView: 'fitToWidth',
-     permissions: permissions,
-  };
-   let powerbi = new pbi.service.Service(pbi.factories.hpmFactory, pbi.factories.wpmpFactory, pbi.factories.routerFactory);
-   const dashboardContainer = document.getElementById('container');
-   const dashboard = powerbi.embed(dashboardContainer, config);
 
-   dashboard.off("loaded");
-   dashboard.off("rendered");
-   dashboard.on("error", function () {
-     this.dashboard.off("error");
+data(){
+  return {
+  config: {
+    type: 'PoweBIReport',
+    id: 'b2e382aa-3d54-4eb3-9a0c-d998a39f8f40',
+    embedUrl:'https://app.powerbi.com/reportEmbed?reportId=b2e382aa-3d54-4eb3-9a0c-d998a39f8f40&autoAuth=true&ctid=760fe82f-1c6d-4e38-9fa9-994e8f3fcb10',
+    permissions: pbi.models.Permissions.READ,
+    settings: {
+          filterPaneEnabled: true,
+          navContentPaneEnabled: true,
+        },
+  },
+  };
+},
+mounted() {
+    this.embedDashboard();
+  },
+  methods: {
+    embedDashboard() {
+      const embedContainer = this.$refs.container;
+      // const embedContainer = document.getElementById('container');
+      const powerbi = new pbi.service.Service(
+        pbi.factories.factories.hpmFactory,
+        pbi.factories.factories.wpmpFactory,
+        pbi.factories.factories.routerFactory
+      );
+      const dashboard = powerbi.embed(embedContainer, this.config);
+      dashboard.off("loaded");
+      dashboard.off("rendered");
+      dashboard.on("error", function () {
+      this.dashboard.off("error");
    });
-  }
+    },
+  },
 }
 </script>
 
@@ -84,3 +57,14 @@ a {
   color: #42b983;
 }
 </style>
+
+<template>
+  <h1>Test Power-BI</h1>
+  <div>
+   <!-- <section id="container" style="height: 750px"/> -->
+   <!-- <section ref="container" style="height: 750px"/> -->
+   <iframe src="https://app.powerbi.com/reportEmbed?reportId=d5b2554b-0d31-4e19-a310-c3610edfaaa3&autoAuth=true&ctid=760fe82f-1c6d-4e38-9fa9-994e8f3fcb10" width="100%" height="600px"></iframe>
+  </div>
+</template>
+
+
